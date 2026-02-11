@@ -1,2 +1,58 @@
-// Dummy build file to satisfy JitPack requirement.
+// Root build file for JitPack publishing
+// This is a dummy build file to satisfy JitPack requirement.
 // Actual publishing is handled by jitpack.yml
+
+buildscript {
+    ext.kotlin_version = '1.9.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// 任务：显示所有可用的AAR文件
+task listAARFiles {
+    doLast {
+        println "Available AAR files in releases directory:"
+        file('releases').listFiles().each { file ->
+            if (file.name.endsWith('.aar')) {
+                println "- ${file.name}"
+            }
+        }
+    }
+}
+
+// 任务：验证AAR文件
+task validateAARFiles {
+    doLast {
+        println "Validating AAR files..."
+        def releasesDir = file('releases')
+        if (!releasesDir.exists()) {
+            throw new GradleException("releases directory does not exist")
+        }
+        
+        def aarFiles = releasesDir.listFiles().findAll { it.name.endsWith('.aar') }
+        if (aarFiles.isEmpty()) {
+            throw new GradleException("No AAR files found in releases directory")
+        }
+        
+        aarFiles.each { file ->
+            println "✓ Found AAR: ${file.name} (${file.length()} bytes)"
+        }
+    }
+}

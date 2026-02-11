@@ -3,3 +3,29 @@ jdk:
   - openjdk11
 install:
   - echo "Building AAR release"
+  - echo "AAR files are pre-built and available in releases directory"
+  - mkdir -p ~/.m2/repository/com/github/iLucasLiu/welink
+  - |
+    for file in releases/*.aar; do
+      if [ -f "$file" ]; then
+        filename=$(basename "$file")
+        modulename="${filename%-*}"
+        version="${filename##*-}"
+        version="${version%.aar}"
+        echo "Processing $modulename version $version"
+        mkdir -p ~/.m2/repository/com/github/iLucasLiu/welink/$modulename/$version
+        cp "$file" ~/.m2/repository/com/github/iLucasLiu/welink/$modulename/$version/$modulename-$version.aar
+        # 创建基本的pom文件
+        cat > ~/.m2/repository/com/github/iLucasLiu/welink/$modulename/$version/$modulename-$version.pom << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.iLucasLiu.welink</groupId>
+  <artifactId>$modulename</artifactId>
+  <version>$version</version>
+  <packaging>aar</packaging>
+</project>
+EOF
+      fi
+    done
