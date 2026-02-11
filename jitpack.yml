@@ -26,5 +26,7 @@ install:
   <packaging>aar</packaging>
 </project>
 EOF
+        echo "✓ Generated POM for $modulename:$version"
       fi
     done
+  - echo "All AAR files and POMs installed successfully"
