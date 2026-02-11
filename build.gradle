@@ -1,28 +1,53 @@
+apply plugin: 'maven-publish'
+
 // Root build file for JitPack publishing
-// This is a dummy build file to satisfy JitPack requirement.
-// Actual publishing is handled by jitpack.yml
+// This handles AAR file publishing to local Maven repository
 
-buildscript {
-    ext.kotlin_version = '1.9.0'
-    repositories {
-        google()
-        mavenCentral()
+task install {
+    doLast {
+        println "Installing AAR files to local Maven repository..."
+        
+        def releasesDir = file('releases')
+        if (!releasesDir.exists()) {
+            throw new GradleException("releases directory does not exist")
+        }
+        
+        def m2Repo = file("${System.getProperty('user.home')}/.m2/repository/com/github/iLucasLiu/welink")
+        m2Repo.mkdirs()
+        
+        releasesDir.listFiles().each { file ->
+            if (file.name.endsWith('.aar')) {
+                def filename = file.name
+                def modulename = filename.substring(0, filename.lastIndexOf('-'))
+                def version = filename.substring(filename.lastIndexOf('-') + 1, filename.lastIndexOf('.aar'))
+                
+                println "Processing $modulename version $version"
+                
+                def moduleDir = file("${m2Repo}/${modulename}/${version}")
+                moduleDir.mkdirs()
+                
+                // Copy AAR file
+                def aarFile = file("${moduleDir}/${modulename}-${version}.aar")
+                file.copyTo(aarFile)
+                
+                // Create POM file
+                def pomFile = file("${moduleDir}/${modulename}-${version}.pom")
+                pomFile.text = """<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.iLucasLiu.welink</groupId>
+  <artifactId>${modulename}</artifactId>
+  <version>${version}</version>
+  <packaging>aar</packaging>
+</project>"""
+                
+                println "✓ Published ${modulename}:${version}"
+            }
+        }
+        
+        println "AAR files published successfully to local Maven repository"
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
 
 // 任务：显示所有可用的AAR文件
@@ -56,3 +81,6 @@ task validateAARFiles {
         }
     }
 }
+
+// 默认任务
+defaultTasks 'install'
