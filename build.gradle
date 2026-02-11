@@ -1,2 +1,54 @@
-// Dummy build file for JitPack
-// Actual publishing is handled by jitpack.yml
+// Simple build file for JitPack
+// This creates a dummy publishToMavenLocal task to satisfy JitPack
+
+task publishToMavenLocal {
+    doLast {
+        println "Running custom AAR publishing..."
+        
+        def releasesDir = file('releases')
+        if (!releasesDir.exists()) {
+            throw new GradleException("releases directory does not exist")
+        }
+        
+        def m2Repo = file("${System.getProperty('user.home')}/.m2/repository/com/github/iLucasLiu/welink")
+        m2Repo.mkdirs()
+        
+        releasesDir.listFiles().each { file ->
+            if (file.name.endsWith('.aar')) {
+                def filename = file.name
+                def modulename = filename.substring(0, filename.lastIndexOf('-'))
+                def version = filename.substring(filename.lastIndexOf('-') + 1, filename.lastIndexOf('.aar'))
+                
+                println "Publishing $modulename version $version"
+                
+                def moduleDir = new File(m2Repo, "${modulename}/${version}")
+                moduleDir.mkdirs()
+                
+                // Copy AAR file
+                def aarFile = new File(moduleDir, "${modulename}-${version}.aar")
+                file.withInputStream { input ->
+                    aarFile.withOutputStream { output ->
+                        output << input
+                    }
+                }
+                
+                // Create POM file
+                def pomFile = new File(moduleDir, "${modulename}-${version}.pom")
+                pomFile.text = """<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.iLucasLiu.welink</groupId>
+  <artifactId>${modulename}</artifactId>
+  <version>${version}</version>
+  <packaging>aar</packaging>
+</project>"""
+                
+                println "✓ Published ${modulename}:${version}"
+                println "✓ Generated POM for ${modulename}:${version}"
+            }
+        }
+        
+        println "All AAR files and POMs published successfully!"
+    }
+}
