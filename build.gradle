@@ -23,15 +23,19 @@ task install {
                 
                 println "Processing $modulename version $version"
                 
-                def moduleDir = file("${m2Repo}/${modulename}/${version}")
+                def moduleDir = new File(m2Repo, "${modulename}/${version}")
                 moduleDir.mkdirs()
                 
                 // Copy AAR file
-                def aarFile = file("${moduleDir}/${modulename}-${version}.aar")
-                file.copyTo(aarFile)
+                def aarFile = new File(moduleDir, "${modulename}-${version}.aar")
+                file.withInputStream { input ->
+                    aarFile.withOutputStream { output ->
+                        output << input
+                    }
+                }
                 
                 // Create POM file
-                def pomFile = file("${moduleDir}/${modulename}-${version}.pom")
+                def pomFile = new File(moduleDir, "${modulename}-${version}.pom")
                 pomFile.text = """<?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
