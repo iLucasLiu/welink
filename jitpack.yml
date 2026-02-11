@@ -1,46 +1,5 @@
+# jitpack.yml
 jdk:
-  - openjdk17
-
+  - openjdk11
 install:
-  # 从 VERSION_NAME（即 Git tag）中提取 artifactId 和 version
-  # 例如 tag = welink-main-5.8.1 → artifactId = welink-main, version = 5.8.1
-  - export FULL_TAG="$VERSION_NAME"
-  - if [[ "$FULL_TAG" != welink-* ]]; then
-      echo "Invalid tag format. Expected: welink-xxx-version"; exit 1;
-    fi
-
-  # 分割字符串：取最后一个 '-' 之前的部分为 artifactId，之后为 version
-  - export ARTIFACT_ID="${FULL_TAG%-*}"
-  - export ACTUAL_VERSION="${FULL_TAG##*-}"
-
-  - echo "Artifact ID: $ARTIFACT_ID"
-  - echo "Version: $ACTUAL_VERSION"
-
-  # 检查 libs/ 下是否存在对应的 .aar 文件
-  - AAR_PATH="libs/${ARTIFACT_ID}.aar"
-  - if [ ! -f "$AAR_PATH" ]; then
-      echo "AAR file not found: $AAR_PATH"; exit 1;
-    fi
-
-  # 设置 Maven 坐标
-  - GROUP_ID="com.github.ilucasliu"        # ← 替换 yourusername 为你的 GitHub 用户名
-  - REPO_PATH="$HOME/.m2/repository/$GROUP_ID/$ARTIFACT_ID/$FULL_TAG"
-
-  - mkdir -p "$REPO_PATH"
-
-  # 复制 AAR
-  - cp "$AAR_PATH" "$REPO_PATH/${ARTIFACT_ID}-${FULL_TAG}.aar"
-
-  # 生成 pom.xml（使用 FULL_TAG 作为 POM 的 version）
-  - cat > "$REPO_PATH/${ARTIFACT_ID}-${FULL_TAG}.pom" <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>$GROUP_ID</groupId>
-  <artifactId>$ARTIFACT_ID</artifactId>
-  <version>$FULL_TAG</version>
-  <packaging>aar</packaging>
-</project>
-EOF
-
-  echo "Published $ARTIFACT_ID:$FULL_TAG"
+  - echo "Building AAR release"
