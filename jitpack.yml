@@ -1,10 +1,8 @@
 # jitpack.yml
 jdk:
   - openjdk11
-before_install:
-  - echo "Before install"
 install:
-  - echo "Installing AAR files to local Maven repository"
+  - echo "Installing AAR files to Maven repository"
   - mkdir -p ~/.m2/repository/com/github/iLucasLiu/welink
   - |
     for file in releases/*.aar; do
