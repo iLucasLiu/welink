@@ -2,13 +2,14 @@
 jdk:
   - openjdk17
 
-# 跳过源码构建，直接使用预编译的AAR
 before_install:
-  - echo "使用预编译AAR，跳过源码构建"
+  - echo "准备预编译AAR"
 
 install:
-  - echo "跳过构建"
+  - echo "复制AAR到Maven仓库目录"
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0
+  - cp welink-main-5.9.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
+  - cp pom.xml $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.pom
 
-# 指定AAR文件作为构建产物
 artifacts:
-  - welink-main-5.9.0.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
