@@ -16,6 +16,13 @@ allprojects {
     }
 }
 
+// 空任务，让JitPack识别项目
+task assembleRelease {
+    doLast {
+        println "使用jitpack.yml处理多AAR发布"
+    }
+}
+
 // // 任务：复制AAR到Maven发布目录
 // task copyAar(type: Copy) {
 //     from 'welink-main-5.9.0.aar'
