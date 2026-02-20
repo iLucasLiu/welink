@@ -2,12 +2,13 @@
 jdk:
   - openjdk17
 
+# 跳过源码构建，直接使用预编译的AAR
 before_install:
   - echo "使用预编译AAR，跳过源码构建"
 
 install:
-  - echo "跳过构建，使用预编译文件"
+  - echo "跳过构建"
 
-# 指定输出文件位置
+# 指定AAR文件作为构建产物
 artifacts:
   - welink-main-5.9.0.aar

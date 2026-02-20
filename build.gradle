@@ -1,0 +1,31 @@
+// 项目级 build.gradle
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// 任务：复制AAR到Maven发布目录
+task copyAar(type: Copy) {
+    from 'welink-main-5.9.0.aar'
+    into "${buildDir}/outputs/aar"
+    rename { String fileName ->
+        fileName.replace('welink-main-5.9.0', 'welink-5.9.0')
+    }
+}
+
+// 让JitPack能识别构建成功
+task assembleRelease {
+    dependsOn copyAar
+}
