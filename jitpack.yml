@@ -6,10 +6,43 @@ before_install:
   - echo "准备预编译AAR"
 
 install:
-  - echo "复制AAR到Maven仓库目录"
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0
-  - cp welink-main-5.9.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
-  - cp pom.xml $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.pom
+  # - echo "复制AAR到Maven仓库目录"
+  # - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0
+  # - cp welink-main-5.9.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
+  # - cp pom.xml $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.pom
+
+  # ===== welink-main =====
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1
+  - cp welink-main-5.8.1.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.aar
+  - cp pom-welink-main.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.pom
+
+  # ===== welink-appui =====
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0
+  - cp welink-appui-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.aar
+  - cp pom-welink-appui.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.pom
+
+  # ===== welink-demoapi =====
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0
+  - cp welink-demoapi-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.aar
+  - cp pom-welink-demoapi.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.pom
+
+  # ===== welink-encoder =====
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0
+  - cp welink-encoder-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.aar
+  - cp pom-welink-encoder.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.pom
+
+  # ===== welink-queue =====
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0
+  - cp welink-queue-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.aar
+  - cp pom-welink-queue.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.pom
+
+  - echo "所有AAR复制完成"
 
 artifacts:
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
+  # - $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
+
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.aar
