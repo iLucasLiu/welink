@@ -1,6 +1,13 @@
 # jitpack.yml
 jdk:
-  - openjdk11
+  - openjdk17
+
+before_install:
+  - echo "使用预编译AAR，跳过源码构建"
+
 install:
-  - echo "Starting AAR publishing process..."
-  - ./gradlew publishToMavenLocal
+  - echo "跳过构建，使用预编译文件"
+
+# 指定输出文件位置
+artifacts:
+  - welink-main-5.9.0.aar
