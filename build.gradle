@@ -16,16 +16,16 @@ allprojects {
     }
 }
 
-// 任务：复制AAR到Maven发布目录
-task copyAar(type: Copy) {
-    from 'welink-main-5.9.0.aar'
-    into "${buildDir}/outputs/aar"
-    rename { String fileName ->
-        fileName.replace('welink-main-5.9.0', 'welink-5.9.0')
-    }
-}
+// // 任务：复制AAR到Maven发布目录
+// task copyAar(type: Copy) {
+//     from 'welink-main-5.9.0.aar'
+//     into "${buildDir}/outputs/aar"
+//     rename { String fileName ->
+//         fileName.replace('welink-main-5.9.0', 'welink-5.9.0')
+//     }
+// }
 
-// 让JitPack能识别构建成功
-task assembleRelease {
-    dependsOn copyAar
-}
+// // 让JitPack能识别构建成功
+// task assembleRelease {
+//     dependsOn copyAar
+// }
