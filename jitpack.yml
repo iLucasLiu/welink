@@ -2,47 +2,40 @@
 jdk:
   - openjdk17
 
-before_install:
-  - echo "准备预编译AAR"
-
 install:
-  # - echo "复制AAR到Maven仓库目录"
-  # - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0
-  # - cp welink-main-5.9.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
-  # - cp pom.xml $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.pom
+  # 所有模块使用 Git 标签版本（由JitPack自动决定）
+  - VERSION=$(git describe --tags --always | sed 's/^v//')
+  
+  # welink-main
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION
+  - cp welink-main-5.8.1.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION/welink-main-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-welink-main.xml > $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION/welink-main-$VERSION.pom
 
-  # ===== welink-main =====
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1
-  - cp welink-main-5.8.1.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.aar
-  - cp pom-welink-main.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.pom
+  # welink-appui
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION
+  - cp welink-appui-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION/welink-appui-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-welink-appui.xml > $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION/welink-appui-$VERSION.pom
 
-  # ===== welink-appui =====
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0
-  - cp welink-appui-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.aar
-  - cp pom-welink-appui.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.pom
+  # welink-demoapi
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION
+  - cp welink-demoapi-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION/welink-demoapi-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-welink-demoapi.xml > $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION/welink-demoapi-$VERSION.pom
 
-  # ===== welink-demoapi =====
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0
-  - cp welink-demoapi-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.aar
-  - cp pom-welink-demoapi.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.pom
+  # welink-encoder
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/$VERSION
+  - cp welink-encoder-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/$VERSION/welink-encoder-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-welink-encoder.xml > $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/$VERSION/welink-encoder-$VERSION.pom
 
-  # ===== welink-encoder =====
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0
-  - cp welink-encoder-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.aar
-  - cp pom-welink-encoder.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.pom
+  # welink-queue
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/$VERSION
+  - cp welink-queue-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/$VERSION/welink-queue-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-welink-queue.xml > $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/$VERSION/welink-queue-$VERSION.pom
 
-  # ===== welink-queue =====
-  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0
-  - cp welink-queue-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.aar
-  - cp pom-welink-queue.xml $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.pom
-
-  - echo "所有AAR复制完成"
+  - echo "所有AAR复制完成，版本：$VERSION"
 
 artifacts:
-  # - $HOME/.m2/repository/com/github/iLucasLiu/welink/5.9.0/welink-5.9.0.aar
-
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink-main/5.8.1/welink-main-5.8.1.aar
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/1.0.0/welink-appui-1.0.0.aar
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/1.0.0/welink-demoapi-1.0.0.aar
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/1.0.0/welink-encoder-1.0.0.aar
-  - $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/1.0.0/welink-queue-1.0.0.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION/welink-main-$VERSION.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION/welink-appui-$VERSION.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION/welink-demoapi-$VERSION.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-encoder/$VERSION/welink-encoder-$VERSION.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/welink-queue/$VERSION/welink-queue-$VERSION.aar

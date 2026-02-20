@@ -8,7 +8,7 @@
 - **welink-appui**: UI组件模块
 - **welink-encoder**: 编码器模块
 - **welink-queue**: 队列处理模块
-- **welink_demoapi**: 演示API模块
+- **welink-demoapi**: 演示API模块
 
 ## 版本信息
 
@@ -18,7 +18,7 @@
 | welink-appui | 1.0.0 | 353.6 KB |
 | welink-encoder | 1.0.1 | 143.3 KB |
 | welink-queue | 1.2.1 | 49.1 KB |
-| welink_demoapi | 1.0.0 | 15.2 KB |
+| welink-demoapi | 1.0.0 | 15.2 KB |
 
 ## 使用方法
 
@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.github.iLucasLiu.welink:welink-queue:1.2.1'
     
     // 演示API模块
-    implementation 'com.github.iLucasLiu.welink:welink_demoapi:1.0.0'
+    implementation 'com.github.iLucasLiu.welink:welink-demoapi:1.0.0'
 }
 ```
 
@@ -79,7 +79,7 @@ dependencies {
     implementation("com.github.iLucasLiu.welink:welink-queue:1.2.1")
     
     // 演示API模块
-    implementation("com.github.iLucasLiu.welink:welink_demoapi:1.0.0")
+    implementation("com.github.iLucasLiu.welink:welink-demoapi:1.0.0")
 }
 ```
 
