@@ -6,6 +6,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.iLucasLiu</groupId>
     <artifactId>welink-main</artifactId>
-    <version>5.8.1</version>
+    <version>1.0.0</version>
     <packaging>aar</packaging>
 </project>
