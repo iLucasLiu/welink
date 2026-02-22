@@ -6,10 +6,10 @@ install:
   # 所有模块使用 Git 标签版本（由JitPack自动决定）
   - VERSION=$(git describe --tags --always | sed 's/^v//')
   
-  # # kit-release
-  # - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION
-  # - cp kit-release-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.aar
-  # - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-kit-release.xml > $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.pom
+  # kit-release
+  - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION
+  - cp kit-release-1.0.0.aar $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.aar
+  - sed "s/<version>.*<\/version>/<version>$VERSION<\/version>/g" pom-kit-release.xml > $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.pom
 
   # welink-main
   - mkdir -p $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION
@@ -39,7 +39,7 @@ install:
   - echo "所有AAR复制完成，版本：$VERSION"
 
 artifacts:
-  # - $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.aar
+  - $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION/welink-main-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION/welink-appui-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION/welink-demoapi-$VERSION.aar
