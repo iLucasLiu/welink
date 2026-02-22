@@ -39,6 +39,7 @@ install:
   - echo "所有AAR复制完成，版本：$VERSION"
 
 artifacts:
+  - $HOME/.m2/repository/com/github/iLucasLiu/kit-release/$VERSION/kit-release-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-main/$VERSION/welink-main-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-appui/$VERSION/welink-appui-$VERSION.aar
   - $HOME/.m2/repository/com/github/iLucasLiu/welink-demoapi/$VERSION/welink-demoapi-$VERSION.aar
